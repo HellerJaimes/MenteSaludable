@@ -24,10 +24,10 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'clave-insegura-de-desarrollo')
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = os.getenv('DEBUG', 'False') == 'True'
 
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '').split(',')
 
-ALLOWED_HOSTS = ['*']
 CSRF_TRUSTED_ORIGINS = ['https://mentesaludable-production.up.railway.app']
 
 # Application definition
@@ -118,14 +118,15 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 # Configuración básica de archivos estáticos
 STATIC_URL = '/static/'  # Esta es la línea que faltaba
-
-# Durante desarrollo (DEBUG = True)
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
-]
-
-# Para producción (al ejecutar collectstatic)
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+# Durante desarrollo (DEBUG = True)
+# Solo para DEBUG True
+if DEBUG:
+    STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+else:
+    STATICFILES_DIRS = []
+# Para producción (al ejecutar collectstatic)
+
 
 # Configuración de URLs
 

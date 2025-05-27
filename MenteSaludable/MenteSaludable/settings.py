@@ -26,7 +26,8 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'clave-insegura-de-desarrollo')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG', 'False') == 'True'
 
-ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '').split(',')
+ALLOWED_HOSTS = ['mentesaludable-production.up.railway.app', 'localhost', '127.0.0.1']
+
 
 CSRF_TRUSTED_ORIGINS = ['https://mentesaludable-production.up.railway.app']
 

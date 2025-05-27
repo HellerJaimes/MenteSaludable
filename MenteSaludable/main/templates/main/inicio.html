@@ -1,0 +1,38 @@
+{% extends "main/base.html" %}
+{% block title %}Inicio | MenteSaludable{% endblock %}
+
+{% block content %}
+<div class="bg-white p-4 p-md-5 rounded shadow-sm text-center" style="max-width: 1000px; margin: 2rem auto;">
+    <h1 class="display-3 fw-semibold mb-3 text-primary">Bienvenido a MenteSaludable</h1>
+    <p class="fs-5 text-secondary mb-4">
+        Tu espacio seguro para entender y cuidar tu salud emocional.<br>
+        Aquí encontrarás herramientas sencillas para evaluar tu ánimo y recibir apoyo personalizado.
+    </p>
+
+    <div class="my-3">
+        <i class="bi bi-heart-pulse-fill text-danger" style="font-size: 3.5rem;"></i>
+    </div>
+
+    <p class="mb-4 fst-italic text-muted">
+        "Tomar el primer paso hacia tu bienestar mental es un acto de valentía y amor propio."
+    </p>
+
+    <div class="d-flex flex-wrap justify-content-center gap-3">
+        {% if user.is_authenticated %}
+            <a href="{% url 'main:test' %}" class="btn btn-lg btn-primary px-5 shadow" style="min-width: 180px;">
+                <i class="bi bi-clipboard2-pulse me-2"></i> Realizar Test
+            </a>
+            <a href="{% url 'main:historial' %}" class="btn btn-lg btn-outline-primary px-5 shadow" style="min-width: 180px;">
+                <i class="bi bi-journal-text me-2"></i> Mi Historial
+            </a>
+        {% else %}
+            <a href="{% url 'main:login' %}" class="btn btn-lg btn-primary px-5 shadow" style="min-width: 180px;">
+                <i class="bi bi-box-arrow-in-right me-2"></i> Iniciar Sesión
+            </a>
+            <a href="{% url 'main:register' %}" class="btn btn-lg btn-success px-5 shadow" style="min-width: 180px;">
+                <i class="bi bi-person-plus me-2"></i> Registrarse
+            </a>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

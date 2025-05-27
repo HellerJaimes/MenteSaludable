@@ -1,0 +1,109 @@
+{% extends "main/base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+
+
+    <!-- Tarjeta de resultados -->
+    <div class="card shadow">
+        <div class="card-header bg-success text-white text-center">
+            <h3 class="mb-0">Resultados de tu Evaluación</h3>
+        </div>
+        <div class="card-body">
+
+            <!-- Puntuación y Nivel Actual -->
+            <div class="row mb-4 g-3">
+                <div class="col-md-6">
+                    <div class="card border-primary h-100">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">Puntuación Promedio</h5>
+                            <div class="display-4 text-primary fw-bold">{{ evaluacion.puntuacion_total|floatformat:1 }}</div>
+                            <p class="text-muted">de 5.0</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card border-success h-100">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">Nivel Actual</h5>
+                            <div class="display-4 text-success fw-bold">
+                                {% if evaluacion.get_nivel_actual_display %}
+                                    {{ evaluacion.get_nivel_actual_display }}
+                                {% else %}
+                                    {{ evaluacion.nivel_actual }}
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mensaje personalizado -->
+            <div class="mb-4">
+                <h5>Mensaje Personalizado</h5>
+                <p class="lead">{{ evaluacion.mensaje_personalizado }}</p>
+            </div>
+
+            <!-- Análisis por Categorías -->
+            <div class="mb-4">
+                <h5>Análisis por Categorías</h5>
+                <div class="list-group">
+                    {% for key, cat in categorias.items %}
+                        <div class="list-group-item d-flex justify-content-between align-items-center">
+                            <div>
+                                <strong>{{ cat.nombre }}:</strong> Promedio {{ cat.promedio }}
+                            </div>
+                            {% if cat.necesita_mejorar %}
+                                <span class="badge bg-danger rounded-pill"><i class="bi bi-exclamation-triangle-fill"></i> Necesita mejorar</span>
+                            {% else %}
+                                <span class="badge bg-success rounded-pill"><i class="bi bi-check-circle-fill"></i> Bueno</span>
+                            {% endif %}
+                        </div>
+                    {% empty %}
+                        <p class="text-muted">No hay análisis por categorías disponible.</p>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Recomendaciones específicas -->
+            <div class="mb-4">
+                <h5>Recomendaciones Específicas</h5>
+                {% if recomendaciones %}
+                    {% if recomendaciones|length > 100 %}
+                        <pre class="bg-light p-3 rounded">{{ recomendaciones }}</pre>
+                    {% else %}
+                        <p>{{ recomendaciones }}</p>
+                    {% endif %}
+                {% else %}
+                    <p class="text-muted">No hay recomendaciones específicas disponibles.</p>
+                {% endif %}
+            </div>
+
+            <!-- Recomendaciones generales -->
+            <div class="mb-4">
+                <h5>Recomendaciones Generales</h5>
+                {% if recomendaciones_generales %}
+                    <ul class="list-group list-group-flush">
+                        {% for item in recomendaciones_generales %}
+                            <li class="list-group-item">{{ item }}</li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p class="text-muted">No hay recomendaciones generales disponibles.</p>
+                {% endif %}
+            </div>
+
+            <!-- Botones -->
+            <div class="d-flex justify-content-end gap-3 mt-4">
+                <a href="{% url 'main:historial' %}" class="btn btn-outline-secondary">
+                    <i class="bi bi-clock-history"></i> Ver Historial
+                </a>
+                <a href="{% url 'main:test' %}" class="btn btn-primary">
+                    <i class="bi bi-pencil-square"></i> Realizar Nuevo Test
+                </a>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

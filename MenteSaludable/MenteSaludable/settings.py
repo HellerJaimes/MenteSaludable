@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-)fuk!b_rk!-gi#ph)qg_44e0i7o^@p43s)wr1iu@o=z4dfzx_1
 DEBUG = False
 
 ALLOWED_HOSTS = ['*']
-CSRF_TRUSTED_ORIGINS ='https://mentesaludable-production.up.railway.app'
+CSRF_TRUSTED_ORIGINS = ['https://mentesaludable-production.up.railway.app']
 
 # Application definition
 
